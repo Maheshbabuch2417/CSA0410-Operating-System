@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+pthread_mutex_t mutex;
+
+void *philosopher(void *arg)
+{
+    int id = *(int *)arg;
+
+    for(int i = 0; i < 3; i++)
+    {
+        printf("Philosopher %d is Thinking\n", id);
+
+        pthread_mutex_lock(&mutex);
+
+        printf("Philosopher %d is Eating\n", id);
+
+        pthread_mutex_unlock(&mutex);
+
+        sleep(1);
+    }
+
+    return NULL;
+}
+
+int main()
+{
+    pthread_t p1, p2;
+    int id1 = 1, id2 = 2;
+
+    pthread_mutex_init(&mutex, NULL);
+
+    pthread_create(&p1, NULL, philosopher, &id1);
+    pthread_create(&p2, NULL, philosopher, &id2);
+
+    pthread_join(p1, NULL);
+    pthread_join(p2, NULL);
+
+    pthread_mutex_destroy(&mutex);
+
+    return 0;
+}
