@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int main()
+{
+    char file[3][20]={"a.txt","b.txt","c.txt"};
+    int i;
+
+    printf("Files:\n");
+
+    for(i=0;i<3;i++)
+        printf("%s\n",file[i]);
+
+    return 0;
+}
